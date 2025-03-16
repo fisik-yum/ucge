@@ -1,0 +1,5 @@
+THE CEscript Definition
+
+1. INTRODUCTION
+
+CEscript is the standard definition language for cengine.
