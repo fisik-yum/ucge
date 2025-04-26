@@ -2,8 +2,7 @@ package cengine
 
 import (
 	"fmt"
-	"math/rand"
-	"slices"
+	"log"
 )
 
 /*
@@ -52,8 +51,8 @@ func NewInventory() Collection {
 }
 
 type Deck struct {
-	Active  []Pile `json:"Active"`
-	Discard []Pile `json:"Discard"`
+	Active  Pile `json:"Active"`
+	Discard Pile `json:"Discard"`
 }
 
 func NewDeck(length int) Deck {
@@ -67,31 +66,26 @@ func (d *Deck) String() string {
 	return fmt.Sprintf("Active: %v\nDiscard: %v", d.Active, d.Discard)
 }
 
-func (d *Deck) SetAt(i int, n *Card) {
-	*&d.Active[i] = *n
-}
-
-func (d *Deck) GetAt(i int) Card {
-	return *&d.Active[i]
+func (d *Deck) Get() Card {
+	ret, err := d.Active.pop()
+	if err != nil {
+		log.Fatal(err)
+	}
+	return ret
 }
 
 func (d *Deck) Shuffle() {
-	dr := *d
-	rand.Shuffle(len(dr.Active), func(i, j int) {
-		dr.Active[i], dr.Active[j] = dr.Active[j], dr.Active[i]
-	})
-}
-
-func (d *Deck) DiscardAt(i int) {
-	d.Discard = append(d.Discard, d.Active[i])
-	d.Active = slices.Delete(d.Active, i, i+1)
+	d.Active.shuffle()
 }
 
 func (d *Deck) NewHand(n int) *Hand {
-	h := Hand{
-		Cards: d.Active[0:n],
+	val,err:=d.Active.popN(n)
+	if err!=nil{
+		log.Fatal(err)
 	}
-	d.Active = d.Active[n:]
+	h := Hand{
+		Cards: val,
+	}
 	return &h
 }
 
