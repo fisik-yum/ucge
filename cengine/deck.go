@@ -11,10 +11,10 @@ and *should* support most stack operations
 // Here lies the implementation of piles
 
 type Pile struct {
-	backing []Card
-	front   int
-	clength int
-	lmax    int
+	Backing []Card `json:"Backing"`
+	Front   int    `json:"Front"`
+	Clength int    `json:"Clength"`
+	Lmax    int    `json:"Lmax"`
 }
 
 func NewPile(lmax int) Pile {
@@ -22,55 +22,55 @@ func NewPile(lmax int) Pile {
 		panic("pile length must be positive")
 	}
 	return Pile{
-		backing: make([]Card, lmax),
-		front:   -1,
-		lmax:    lmax,
-		clength: 0,
+		Backing: make([]Card, lmax),
+		Front:   -1,
+		Lmax:    lmax,
+		Clength: 0,
 	}
 }
 
 func (p *Pile) push(c Card) error {
-	if p.front == p.lmax-1 {
+	if p.Front == p.Lmax-1 {
 		return errors.New("pile is full")
 	}
-	p.front++
-	p.backing[p.front] = c
+	p.Front++
+	p.Backing[p.Front] = c
 	return nil
 
 }
 
 func (p *Pile) pop() (Card, error) {
-	if p.front == -1 {
+	if p.Front == -1 {
 		return Card{Prop: 0}, errors.New("pile is empty")
 	}
-	p.front--
-	return p.backing[p.front], nil
+	p.Front--
+	return p.Backing[p.Front], nil
 }
 func (p *Pile) peek() (Card, error) {
-	if p.front == -1 {
+	if p.Front == -1 {
 		return Card{Prop: 0}, errors.New("pile is empty")
 	}
-	return p.backing[p.front], nil
+	return p.Backing[p.Front], nil
 }
 
 func (p *Pile) length() int {
-	return p.front + 1
+	return p.Front + 1
 }
 
 func (p *Pile) shuffle() {
-	if p.front == -1 {
+	if p.Front == -1 {
 		return
 	}
 	var shuf []Card
-	if p.front == p.lmax-1 {
+	if p.Front == p.Lmax-1 {
 
-		shuf = p.backing[:]
+		shuf = p.Backing[:]
 	} else {
-		shuf = p.backing[:p.front+1]
+		shuf = p.Backing[:p.Front+1]
 	}
 	rand.Shuffle(len(shuf), func(i, j int) {
 		shuf[i], shuf[j] = shuf[j], shuf[i]
 	})
-	concat := append(make([]Card, p.lmax-len(shuf)), shuf...)
-	p.backing = concat
+	concat := append(make([]Card, p.Lmax-len(shuf)), shuf...)
+	p.Backing = concat
 }

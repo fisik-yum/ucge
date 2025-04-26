@@ -52,14 +52,14 @@ func NewInventory() Collection {
 }
 
 type Deck struct {
-	Active  []Card `json:"Active"`
-	Discard []Card `json:"Discard"`
+	Active  []Pile `json:"Active"`
+	Discard []Pile `json:"Discard"`
 }
 
 func NewDeck(length int) Deck {
 	return Deck{
-		Active:  make([]Card, length),
-		Discard: make([]Card, 0),
+		Active:  NewPile(length),
+		Discard: NewPile(length),
 	}
 }
 
