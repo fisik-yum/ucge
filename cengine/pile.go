@@ -4,8 +4,11 @@ import "errors"
 import "math/rand"
 
 /*
-cengine decks are effectively stack data structures with two backing arrays
+Cengine piles are effectively stack data structures with two backing arrays
 and *should* support most stack operations
+
+The pile type is backed by a constant length slice that is determined at
+initialization. 
 */
 
 // Here lies the implementation of piles
@@ -44,7 +47,7 @@ func (p *Pile) pop() (Card, error) {
 		return Card{Prop: 0}, errors.New("pile is empty")
 	}
 	p.Front--
-	return p.Backing[p.Front], nil
+	return p.Backing[p.Front+1], nil
 }
 func (p *Pile) peek() (Card, error) {
 	if p.Front == -1 {

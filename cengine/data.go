@@ -71,6 +71,10 @@ func (d *Deck) Get() Card {
 	if err != nil {
 		log.Fatal(err)
 	}
+	err = d.Discard.push(ret)
+	if err != nil {
+		log.Fatal(err)
+	}
 	return ret
 }
 
@@ -79,8 +83,8 @@ func (d *Deck) Shuffle() {
 }
 
 func (d *Deck) NewHand(n int) *Hand {
-	val,err:=d.Active.popN(n)
-	if err!=nil{
+	val, err := d.Active.popN(n)
+	if err != nil {
 		log.Fatal(err)
 	}
 	h := Hand{
