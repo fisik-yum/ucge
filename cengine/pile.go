@@ -8,10 +8,8 @@ Cengine piles are effectively stack data structures with two backing arrays
 and *should* support most stack operations
 
 The pile type is backed by a constant length slice that is determined at
-initialization. 
-*/
-
-// Here lies the implementation of piles
+initialization. Extreme care is taken to not reallocate memory.
+*/ // Here lies the implementation of piles
 
 type Pile struct {
 	Backing []Card `json:"Backing"`
@@ -57,13 +55,13 @@ func (p *Pile) peek() (Card, error) {
 }
 
 func (p *Pile) length() int {
-	return p.Front + 1
+	 return p.Front + 1
 }
 
 func (p *Pile) shuffle() {
 	if p.Front == -1 {
 		return
-	}
+	} 
 	var shuf []Card
 	if p.Front == p.Lmax-1 {
 
@@ -83,7 +81,7 @@ func (p*Pile)popN(n int) ([]Card, error){
 	return []Card{},errors.New("pile too small")
  }
  ret:= p.Backing[p.Front:p.Front+n]
-p.Front+=5
+p.Front+=n
 return ret,nil
 }
 
