@@ -12,6 +12,8 @@ cengine does not preemptively load the entire game archive at once. only a few
 parts are loaded on startup - namely, all Decks (part of a single collection),
 Hands (optional), and the entrypoint file.
 */
+
+// loads `def.dkf` from folder.
 func LoadData(path string) LoaderData {
 	f, err := os.ReadFile(filepath.Join(".", path, "def.dkf"))
 	if err != nil {

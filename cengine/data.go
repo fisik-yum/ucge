@@ -10,18 +10,6 @@ Cengine handles most operations in terms of Cards and Decks. A Card is a single
 unit with specific properties and type.
 */
 
-const (
-	ToneSerious uint8 = iota
-	ToneNeutral
-	ToneFriendly
-)
-
-const (
-	ResourceCoins uint8 = iota + 16
-	ResourceWater
-	ResourceFood
-)
-
 type Card struct {
 	Prop uint8 `json:"Prop"`
 }

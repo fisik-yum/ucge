@@ -4,8 +4,8 @@ import "errors"
 import "math/rand"
 
 /*
-Cengine piles are effectively stack data structures with two backing arrays
-and *should* support most stack operations
+Cengine piles are effectively stack data structures and *should* support most 
+stack operations
 
 The pile type is backed by a constant length slice that is determined at
 initialization. Extreme care is taken to not reallocate memory.
