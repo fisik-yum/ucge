@@ -38,8 +38,14 @@ func (p *Parser) Parse() (ld LoaderData) {
 		case EOF:
 			return ld
 		case DECK:
-			t, s = p.parseExpect(IDENT)
-			ld.Decks[s] = &Deck{Active: make([]Card, 0), Discard: make([]Card, 0)}
+			_, name := p.parseExpect(IDENT)
+			_, size := p.parseExpect(IDENT)
+			val_size, err := strconv.ParseInt(size, 10, 0)
+			if err != nil {
+				log.Fatal(err)
+			}
+			nd := NewDeck(int(val_size))
+			ld.Decks[name] = &nd
 		case CARD:
 			_, id := p.parseExpect(IDENT)
 			_, s = p.parseExpect(IDENT)
@@ -47,7 +53,10 @@ func (p *Parser) Parse() (ld LoaderData) {
 			if err != nil {
 				log.Fatal(sendErr())
 			}
-			ld.Decks[s].Active = append(ld.Decks[s].Active, Card{Prop: uint8(val)})
+			err = ld.Decks[s].Active.push(Card{Prop: uint8(val)})
+			if err != nil {
+				log.Fatal(err)
+			}
 		case ENTRY:
 			t, s = p.parseExpect(IDENT)
 			ld.EntryPoint = s
@@ -74,7 +83,7 @@ func (p *Parser) parseExpect(e Token) (t Token, s string) {
 	if t == e {
 		return
 	}
-	log.Fatal("Unexpected token")
+	log.Fatalf("Unexpected token %v",t)
 	return
 }
 
