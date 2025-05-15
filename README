@@ -1,0 +1,13 @@
+cengine
+========
+a work-in-progress library for card-based games
+========
+cengine is not a library. it is more of a template project that happens to
+contain a module. the user is expected to tweak and customize the behavior of
+their cengine copy (provided they abide by the rules of the license).
+========
+the goal of this is write as much as possible using the go stdlib. this means
+that cengine does not include any sort of UI tooling. that is simply up to the
+user to write. the only thing provided is a framework to manage and control 
+state.
+========
